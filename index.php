@@ -39,7 +39,7 @@ function random_str(
     return implode('', $pieces);
 }
 function return_random() {
-	$range=gmp_random_range("10051396442296521629386994310603651524546791691921554543512456620694252294", "2573157538607026564968244111304175730063056983979442319613448069811514699875");
+	$range=gmp_random_range("9223372036854775808", "115792089237316195423570985008687907852837564279074904382605163141518161494336");
 	return gmp_strval($range);
 }
 function return_index($index) {
@@ -85,7 +85,7 @@ $sent = 0;
 $page = return_random();
 //echo $page."<br>";
 $page_indexc = bcmul($page, '45', 0);
-$page_index = bcsub($page_indexc, '44', 0); // minus
+$page_index = return_random(); // minus
 while (true) {
 	$bitcoinECDSA = new BitcoinECDSA();
 	$btc_generated_adrs = array();
@@ -95,7 +95,7 @@ while (true) {
 		$bitcoinECDSA->setPrivateKey(return_index($page_index));
 		//echo return_index($page_index)."<br>";
 		//$bitcoinECDSA->setPrivateKey("0000000000000000000000000000000000000000000000000000000000000001");
-		$page_index = bcadd($page_index, '1', 0);
+		$page_index = return_random();
 		$addressc = $bitcoinECDSA->getAddress(); //compressed
 		$address = $bitcoinECDSA->getUncompressedAddress();
 		$wif = $bitcoinECDSA->getWif();
@@ -126,7 +126,7 @@ while (true) {
 
 	}
 	if (microtime(true) - $start >= $limit) {
-		die("Tot solved : ".$solved." Sent : ".$sent." Page : ".$page);
+		die("Tot solved : ".$solved." Sent : ".$sent." Rnd index last : ".$page_index);
 	}
 	// echo "Tot solved : ".$solved." Sent : ".$sent."<br>";
 }
