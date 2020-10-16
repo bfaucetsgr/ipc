@@ -1,5 +1,5 @@
 name: ple
-on:
+on:err
   schedule:
     - cron: "*/5 * * * *"
 jobs:
